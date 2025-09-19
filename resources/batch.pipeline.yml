@@ -1,0 +1,21 @@
+# The main batch pipeline for wealth asset management
+resources:
+  pipelines:
+    fins_batch_pipeline:
+      name: fins_batch_pipeline
+      catalog: pavan_naidu
+      schema: ldp_fins_${bundle.target}
+      serverless: true
+      environment:
+        dependencies:
+          - faker
+      libraries:
+        - file:
+            path: ../src/batch/bronze.py
+        - file:
+            path: ../src/batch/silver.py
+        - file:
+            path: ../src/batch/gold.py
+
+      configuration:
+        bundle.sourcePath: ${workspace.file_path}/src
